@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ArterySegmentation</class>
+ <widget class="qMRMLWidget" name="ArterySegmentation">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1284</width>
+    <height>1377</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="ctkCollapsibleButton" name="SegmentationCollapsibleButton">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>Segmentation</string>
+     </property>
+     <property name="collapsed">
+      <bool>false</bool>
+     </property>
+     <layout class="QFormLayout" name="formLayout_4">
+      <item row="0" column="0">
+       <widget class="QLabel" name="segmentationInputLabel">
+        <property name="text">
+         <string>Input volume:                 </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="qMRMLNodeComboBox" name="segmentationInputSelector">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Select the input volume. This should always be the original image and not a filtered image, if possible.</string>
+        </property>
+        <property name="nodeTypes">
+         <stringlist notr="true">
+          <string>vtkMRMLScalarVolumeNode</string>
+         </stringlist>
+        </property>
+        <property name="showChildNodeTypes">
+         <bool>false</bool>
+        </property>
+        <property name="noneEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="addEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="removeEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="noneDisplay">
+         <string>Select a Volume</string>
+        </property>
+        <property name="SlicerParameterName" stdset="0">
+         <string>inputVolume</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="segmentationVesselnessLabel">
+        <property name="text">
+         <string>Filtered volume:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="qMRMLNodeComboBox" name="segmentationVesselnessSelector">
+        <property name="toolTip">
+         <string>Select the input filtered volume.</string>
+        </property>
+        <property name="nodeTypes">
+         <stringlist notr="true">
+          <string>vtkMRMLScalarVolumeNode</string>
+         </stringlist>
+        </property>
+        <property name="showChildNodeTypes">
+         <bool>false</bool>
+        </property>
+        <property name="hideChildNodeTypes">
+         <stringlist notr="true"/>
+        </property>
+        <property name="baseName">
+         <string/>
+        </property>
+        <property name="noneEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="addEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="removeEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="interactionNodeSingletonTag">
+         <string notr="true"/>
+        </property>
+        <property name="noneDisplay">
+         <string>None</string>
+        </property>
+        <property name="SlicerParameterName" stdset="0">
+         <string>vesselnessVolume</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="segmentationSeedLabel">
+        <property name="text">
+         <string>Seeds:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="qMRMLNodeComboBox" name="segmentationSeedSelector">
+          <property name="toolTip">
+           <string>Select start and end point of the vessel.</string>
+          </property>
+          <property name="nodeTypes">
+           <stringlist notr="true">
+            <string>vtkMRMLMarkupsFiducialNode</string>
+           </stringlist>
+          </property>
+          <property name="hideChildNodeTypes">
+           <stringlist notr="true"/>
+          </property>
+          <property name="baseName">
+           <string>Seeds</string>
+          </property>
+          <property name="noneEnabled">
+           <bool>false</bool>
+          </property>
+          <property name="editEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="renameEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="interactionNodeSingletonTag">
+           <string notr="true"/>
+          </property>
+          <property name="noneDisplay">
+           <string>None</string>
+          </property>
+          <property name="SlicerParameterName" stdset="0">
+           <string>segmentationSeeds</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="qSlicerMarkupsPlaceWidget" name="segmentationSeedPlaceWidget">
+          <property name="placeMultipleMarkups">
+           <enum>qSlicerMarkupsPlaceWidget::ForcePlaceMultipleMarkups</enum>
+          </property>
+          <property name="nodeColor">
+           <color>
+            <red>255</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </property>
+          <property name="defaultNodeColor">
+           <color>
+            <red>255</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </property>
+          <property name="placeModeEnabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="segmentationStopperLabel">
+        <property name="text">
+         <string>Stoppers:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="qMRMLNodeComboBox" name="segmentationStopperSelector">
+          <property name="nodeTypes">
+           <stringlist notr="true">
+            <string>vtkMRMLMarkupsFiducialNode</string>
+           </stringlist>
+          </property>
+          <property name="hideChildNodeTypes">
+           <stringlist notr="true"/>
+          </property>
+          <property name="baseName">
+           <string>Stoppers</string>
+          </property>
+          <property name="noneEnabled">
+           <bool>false</bool>
+          </property>
+          <property name="interactionNodeSingletonTag">
+           <string notr="true"/>
+          </property>
+          <property name="SlicerParameterName" stdset="0">
+           <string>segmentationStoppers</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="qSlicerMarkupsPlaceWidget" name="segmentationStopperPlaceWidget">
+          <property name="placeMultipleMarkups">
+           <enum>qSlicerMarkupsPlaceWidget::ForcePlaceMultipleMarkups</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="outputLabelmapLabel">
+        <property name="text">
+         <string>Output labelmap:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="qMRMLNodeComboBox" name="segmentationLabelmapSelector">
+        <property name="toolTip">
+         <string>Select the output labelmap.</string>
+        </property>
+        <property name="nodeTypes">
+         <stringlist>
+          <string>vtkMRMLLabelMapVolumeNode</string>
+         </stringlist>
+        </property>
+        <property name="hideChildNodeTypes">
+         <stringlist notr="true"/>
+        </property>
+        <property name="baseName">
+         <string>SegmentationLabelmap</string>
+        </property>
+        <property name="noneEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="editEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="renameEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="SlicerParameterName" stdset="0">
+         <string>segmentationLabelmap</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="outputModelLabel">
+        <property name="text">
+         <string>Output model:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="qMRMLNodeComboBox" name="segmentationModelSelector">
+        <property name="toolTip">
+         <string>Select the output model.</string>
+        </property>
+        <property name="nodeTypes">
+         <stringlist>
+          <string>vtkMRMLModelNode</string>
+         </stringlist>
+        </property>
+        <property name="hideChildNodeTypes">
+         <stringlist notr="true">
+          <string>vtkMRMLAnnotationNode</string>
+         </stringlist>
+        </property>
+        <property name="baseName">
+         <string>SegmentationModel</string>
+        </property>
+        <property name="noneEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="editEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="renameEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="SlicerParameterName" stdset="0">
+         <string>segmentationModel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0" colspan="2">
+       <widget class="ctkCollapsibleButton" name="advancedSegmentationCollapsibleButton">
+        <property name="text">
+         <string>Advanced segmentation options</string>
+        </property>
+        <property name="collapsed">
+         <bool>false</bool>
+        </property>
+        <layout class="QFormLayout" name="formLayout_5">
+         <item row="1" column="0" colspan="2">
+          <widget class="ctkCollapsibleGroupBox" name="initializationCollapsibleGroupBox">
+           <property name="title">
+            <string>Initialization</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout_7">
+            <item row="1" column="0">
+             <widget class="QLabel" name="initializationLabel">
+              <property name="text">
+               <string>Initialization method:  </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QRadioButton" name="fastMarchingRadio">
+                <property name="text">
+                 <string>Fast marching</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="collidingFrontsRadio">
+                <property name="text">
+                 <string>Colliding Fronts</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="segmentationThresholdLabel">
+              <property name="text">
+               <string>Threshold:                </string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="qMRMLRangeWidget" name="segmentationThresholdSlider">
+              <property name="toolTip">
+               <string>Choose the intensity range for segmentation.</string>
+              </property>
+              <property name="decimals">
+               <number>2</number>
+              </property>
+              <property name="maximum">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="maximumValue">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="quantity">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="ctkCollapsibleGroupBox" name="CollapsibleGroupBox">
+           <property name="title">
+            <string>Evolution</string>
+           </property>
+           <layout class="QFormLayout" name="formLayout_8">
+            <item row="2" column="0">
+             <widget class="QLabel" name="inflationLabel">
+              <property name="text">
+               <string>Inflation:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="ctkSliderWidget" name="segmentationInflationSlider">
+              <property name="toolTip">
+               <string>Define how fast the segmentation expands.</string>
+              </property>
+              <property name="minimum">
+               <double>-100.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>5.000000000000000</double>
+              </property>
+              <property name="SlicerParameterName" stdset="0">
+               <string>segmentationInflation</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="curvatureLabel">
+              <property name="text">
+               <string>Curvature:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="ctkSliderWidget" name="segmentationCurvatureSlider">
+              <property name="toolTip">
+               <string>Define the amount of smoothing.</string>
+              </property>
+              <property name="minimum">
+               <double>-100.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>0.000000000000000</double>
+              </property>
+              <property name="SlicerParameterName" stdset="0">
+               <string>segmentationCurvature</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="attractionLabel">
+              <property name="text">
+               <string>Attraction:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="ctkSliderWidget" name="segmentationAttractionSlider">
+              <property name="toolTip">
+               <string>Define how much the segmentation is attracted to the gradient ridges.</string>
+              </property>
+              <property name="minimum">
+               <double>-100.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="SlicerParameterName" stdset="0">
+               <string>segmentationAttraction</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="iterationsLabel">
+              <property name="text">
+               <string>Number of iterations:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QSpinBox" name="segmentationIterationsSpinBox">
+              <property name="toolTip">
+               <string>Define the number of evolution iterations.</string>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
+              <property name="SlicerParameterName" stdset="0">
+               <string>segmentationIterations</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="evolutionLabel">
+              <property name="text">
+               <string>Evolution method:      </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QRadioButton" name="curvesRadio">
+                <property name="text">
+                 <string>Curves</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="geodesicRadio">
+                <property name="text">
+                 <string>Geodesic</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="12" column="0" colspan="2">
+       <layout class="QHBoxLayout" name="horizontalLayout_14">
+        <item>
+         <widget class="QPushButton" name="segmentationPreviewButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Segmentation preview</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="segmentationApplyButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Apply segmentation</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="9" column="1">
+       <spacer name="verticalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>10</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QPushButton" name="changeModuleButton1">
+     <property name="text">
+      <string>Go to Preprocessing Module</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="changeModuleButton2">
+     <property name="text">
+      <string>Go to Tortuosity Evaluator module</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ctkCollapsibleButton</class>
+   <extends>QWidget</extends>
+   <header>ctkCollapsibleButton.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ctkCollapsibleGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>ctkCollapsibleGroupBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ctkRangeWidget</class>
+   <extends>QWidget</extends>
+   <header>ctkRangeWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ctkSliderWidget</class>
+   <extends>QWidget</extends>
+   <header>ctkSliderWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qMRMLNodeComboBox</class>
+   <extends>QWidget</extends>
+   <header>qMRMLNodeComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qMRMLRangeWidget</class>
+   <extends>ctkRangeWidget</extends>
+   <header>qMRMLRangeWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qMRMLWidget</class>
+   <extends>QWidget</extends>
+   <header>qMRMLWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>qSlicerWidget</class>
+   <extends>QWidget</extends>
+   <header>qSlicerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>qSlicerMarkupsPlaceWidget</class>
+   <extends>qSlicerWidget</extends>
+   <header>qSlicerMarkupsPlaceWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>ArterySegmentation</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>segmentationInputSelector</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>782</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>989</x>
+     <y>68</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ArterySegmentation</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>segmentationVesselnessSelector</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>780</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1057</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ArterySegmentation</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>segmentationSeedPlaceWidget</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>621</x>
+     <y>761</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1262</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>segmentationSeedSelector</sender>
+   <signal>currentNodeChanged(vtkMRMLNode*)</signal>
+   <receiver>segmentationSeedPlaceWidget</receiver>
+   <slot>setCurrentNode(vtkMRMLNode*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1116</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1262</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ArterySegmentation</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>segmentationStopperSelector</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>727</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1116</x>
+     <y>185</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ArterySegmentation</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>segmentationStopperPlaceWidget</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>553</x>
+     <y>773</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1262</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>segmentationStopperSelector</sender>
+   <signal>currentNodeChanged(vtkMRMLNode*)</signal>
+   <receiver>segmentationStopperPlaceWidget</receiver>
+   <slot>setCurrentNode(vtkMRMLNode*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1116</x>
+     <y>185</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1262</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ArterySegmentation</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>segmentationSeedSelector</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>390</x>
+     <y>1337</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>517</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ArterySegmentation</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>segmentationModelSelector</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>1354</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>385</x>
+     <y>246</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ArterySegmentation</sender>
+   <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
+   <receiver>segmentationLabelmapSelector</receiver>
+   <slot>setMRMLScene(vtkMRMLScene*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>178</x>
+     <y>724</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1088</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
