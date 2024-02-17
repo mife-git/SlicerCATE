@@ -99,10 +99,10 @@
          <bool>false</bool>
         </property>
         <property name="interactionNodeSingletonTag">
-         <string notr="true"/>
+         <string>Singleton</string>
         </property>
         <property name="noneDisplay">
-         <string>None</string>
+         <string>Select a volume</string>
         </property>
         <property name="SlicerParameterName" stdset="0">
          <string>vesselnessVolume</string>

@@ -128,9 +128,10 @@ class ArterySegmentationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin
 
         # Other connections
         self.ui.segmentationInputSelector.connect('currentNodeChanged(vtkMRMLNode*)', self.updateThresholdRange)
-        self.ui.segmentationThresholdSlider.connect("valuesChanged(double,double)", self.onThresholdSliderChanged)
-        self.ui.fastMarchingRadio.connect("clicked(bool)", self.onInitializationRadio)
-        self.ui.collidingFrontsRadio.connect("clicked(bool)", self.onInitializationRadio)
+        self.ui.segmentationVesselnessSelector.connect('currentNodeChanged(vtkMRMLNode*)', self.updateThresholdRange)
+        self.ui.segmentationThresholdSlider.connect('valuesChanged(double,double)', self.onThresholdSliderChanged)
+        self.ui.fastMarchingRadio.connect('clicked(bool)', self.onInitializationRadio)
+        self.ui.collidingFrontsRadio.connect('clicked(bool)', self.onInitializationRadio)
 
         # Collapse advanced steps
         self.ui.advancedSegmentationCollapsibleButton.collapsed = True
@@ -199,6 +200,7 @@ class ArterySegmentationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin
             # ui element that needs connection.
             self._parameterNodeGuiTag = self._parameterNode.connectGui(self.ui)
             self.addObserver(self._parameterNode, vtk.vtkCommand.ModifiedEvent, self._checkCanApply)
+            self.updateThresholdRange()
             self._checkCanApply()
 
     def _checkCanApply(self, caller=None, event=None) -> None:
@@ -214,9 +216,6 @@ class ArterySegmentationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin
             self.ui.segmentationPreviewButton.enabled = False
             self.ui.segmentationApplyButton.enabled = False
 
-        # Update threshold range
-        self.updateThresholdRange()
-
     def updateThresholdRange(self):
         """
         Update threshold range for segmentation.
@@ -228,9 +227,9 @@ class ArterySegmentationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin
 
         # If we have a vesselnessNode, we will configure the threshold slider for it instead of the original image
         # if not, the currentNode is the input volume
-        thresholdedNode = self._parameterNode.vesselnessVolume
+        thresholdedNode = self.ui.segmentationVesselnessSelector.currentNode()
         if not thresholdedNode or thresholdedNode == 'None':
-            thresholdedNode = self._parameterNode.inputVolume
+            thresholdedNode = self.ui.segmentationInputSelector.currentNode()
 
         if not thresholdedNode or not thresholdedNode.GetImageData():
             wasBlocked = self.ui.segmentationThresholdSlider.blockSignals(True)
