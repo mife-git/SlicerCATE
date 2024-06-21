@@ -146,12 +146,6 @@ class TortuosityEvaluatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixi
         self.ui.advancedCollapsibleButton.collapsed = True
         self.ui.tortuosityCollapsibleButton.collapsed = True
 
-        # Add all the options for artery selection
-        arteries = ["Select the branch name", "Left anterior descending artery", "Left circumflex artery",
-                    "Right coronary artery"]
-        for idx, artery in enumerate(arteries):
-            self.ui.arterySelector.addItem(artery, idx)
-
         # Connections
 
         # These connections ensure that we update parameter node when scene is closed
@@ -377,9 +371,8 @@ class TortuosityEvaluatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixi
         Save patient data as pdf (visual report) and csv (indexes).
         """
         try:
-            # Get exam ID and branch name defined by the user
+            # Get exam ID defined by the user
             examID = self.ui.IDTextEdit.toPlainText()
-            branchName = self.ui.arterySelector.currentText
 
             # Get centerline
             centerlineModel = self._parameterNode.centerlineModel
@@ -387,7 +380,7 @@ class TortuosityEvaluatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixi
 
             # Get report table and save it as .csv file in the report folder
             reportTable = self._parameterNode.outputTable
-            reportTablePath = os.path.join(self.reportFolderPath, examID + "_reportTable.csv")
+            reportTablePath = os.path.join(self.reportFolderPath, examID + "_report_table.csv")
             slicer.util.saveNode(reportTable, reportTablePath)
 
             # Get table rows and columns
@@ -983,7 +976,7 @@ class TortuosityEvaluatorLogic(ScriptedLoadableModuleLogic):
 
     def createPdfReport(self, savePath, trajPath, examID):
 
-        reportTablePath = os.path.join(savePath, examID + "_reportTable.csv")
+        reportTablePath = os.path.join(savePath, examID + "_report_table.csv")
         reportPath = os.path.join(savePath, examID + "_report.pdf")
 
         try:

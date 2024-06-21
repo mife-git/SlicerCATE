@@ -166,30 +166,13 @@
         </property>
         <layout class="QFormLayout" name="formLayout_7">
          <item row="0" column="0">
-          <widget class="QLabel" name="arteryLabel">
-           <property name="text">
-            <string>Branch name:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="arterySelector">
-           <property name="toolTip">
-            <string>Choose the artery which is going to be used for report generation.</string>
-           </property>
-           <property name="currentText">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
           <widget class="QLabel" name="patientIDLabel">
            <property name="text">
             <string>Exam name:</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="0" column="1">
           <widget class="QPlainTextEdit" name="IDTextEdit">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
