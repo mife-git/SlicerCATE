@@ -353,6 +353,10 @@ class ArterySegmentationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin
             labelmapNode = self._parameterNode.segmentationLabelmap
             modelNode = self._parameterNode.segmentationModel
 
+            # Check dimensions
+            if inputVolumeNode.GetImageData().GetDimensions() != vesselnessNode.GetImageData().GetDimensions():
+                raise ValueError("input and filtered volumes must have the same dimensions")
+
             # Convert and sort input seeds (sorting is needed when a single branch with segments defined by seeds
             # is segmented)
             seeds = self.convertFiducialHierarchyToVtkIdList(seedsNode, inputVolumeNode)

@@ -277,6 +277,10 @@ class PreprocessingWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
             # Input and output volumes
             filterInputVolumeNode = self._parameterNode.inputVolume
+            croppedNodeName = filterInputVolumeNode.GetName() + '_cropped'
+            filterInputVolumeNodeCropped = slicer.modules.volumes.logic().CloneVolume(slicer.mrmlScene,
+                                                                                      filterInputVolumeNode,
+                                                                                      croppedNodeName)
             filterOutputVolumeNode = self._parameterNode.vesselnessVolume
 
             contrastSeedNode = self._parameterNode.contrastSeed
@@ -290,7 +294,8 @@ class PreprocessingWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             # Crop volume based on ROI
             roiNode = slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLMarkupsROINode")
             if roiNode:
-                slicer.modules.cropvolume.logic().CropVoxelBased(roiNode, filterInputVolumeNode, filterInputVolumeNode)
+                slicer.modules.cropvolume.logic().CropVoxelBased(roiNode, filterInputVolumeNode,
+                                                                 filterInputVolumeNodeCropped)
                 slicer.mrmlScene.RemoveNode(roiNode)
 
             # Get filter parameters
@@ -306,8 +311,8 @@ class PreprocessingWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             kernelRadiusY = maximumDiameterMm / 2
             kernelRadiusZ = 0
             kernelType = 1  # ball
-            self.logic.computeTopHatTransform(filterInputVolumeNode, TopHatFilteredVolume, kernelType, kernelRadiusX,
-                                              kernelRadiusY, kernelRadiusZ)
+            self.logic.computeTopHatTransform(filterInputVolumeNodeCropped, TopHatFilteredVolume, kernelType,
+                                              kernelRadiusX, kernelRadiusY, kernelRadiusZ)
             # Get step method
             if self.ui.equispacedRadio.checked:
                 stepMethod = 0
@@ -333,7 +338,8 @@ class PreprocessingWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                                maximumDiameterMm, alpha, beta, contrastMeasure,
                                                int(discretizationSteps), stepMethod)
 
-            slicer.util.setSliceViewerLayers(background=filterInputVolumeNode, foreground=filterOutputVolumeNode,
+            slicer.mrmlScene.RemoveNode(TopHatFilteredVolume)
+            slicer.util.setSliceViewerLayers(background=filterInputVolumeNodeCropped, foreground=filterOutputVolumeNode,
                                              foregroundOpacity=0.6)
 
         except Exception as e:
