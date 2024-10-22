@@ -1,6 +1,6 @@
 # SlicerCATE
 
-Official Repository of the conference paper [CATE (Coronary Artery Tortuosity Evaluator): A Semi-Automatic Tool for Quantitative Assessment of Coronary Artery Tortuosity from CT Angiography](https://ieeexplore.ieee.org/document/10596810) presented at the IEEE International Workshop on Medical Measurement and Applications (MEMEA) 2024.
+Official Repository of the conference paper [CATE (Coronary Artery Tortuosity Evaluator): A Semi-Automatic Tool for Quantitative Assessment of Coronary Artery Tortuosity from CT Angiography](https://ieeexplore.ieee.org/document/10596810) presented at the IEEE International Workshop on Medical Measurement and Applications (MEMEA) 2024. If you find this repository useful for your work, please cite the paper.
 
 SlicerCATE (Coronary Artery Tortuosity Evaluator) is a 3D Slicer extension designed to analyze Coronary Computed Tomography Angiography (CCTA) images. It extracts geometric characteristics of coronary vessels to generate indices and metrics for assessing coronary artery tortuosity. The workflow is divided into three modules:
 - Preprocessing
